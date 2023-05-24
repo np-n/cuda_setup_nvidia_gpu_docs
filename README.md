@@ -105,8 +105,9 @@ wget https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installe
 ```
 sudo sh cuda_10.2.89_440.33.01_linux.run
 ```
-	- Note: On the Agreement section deselect/unselect driver  checkbox since driver 470 is installed.
+- Note: On the Agreement section deselect/unselect driver  checkbox since driver 470 is installed.
 Output: 
+
 ```
 ===========
 = Summary =
