@@ -1,4 +1,4 @@
-### Environment setup for NVIDIA GPU
+### cuda setup for NVIDIA GPU devices
 
 #### 1. Check driver version supported
 ```
