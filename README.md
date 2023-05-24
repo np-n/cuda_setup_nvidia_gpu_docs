@@ -229,20 +229,7 @@ Result of classification: 1 3 5
 Test passed!
 ```
 
-
-
-----
-#### To check version of CUDA
-```
-nvcc --version
-```
-Output:
-```
-nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2019 NVIDIA Corporation
-Built on Wed_Oct_23_19:24:38_PDT_2019
-Cuda compilation tools, release 10.2, V10.2.89
-```
+Now, our CUDA setup is complete for NVIDIA GPU and you are ready for deep learning.
 
 
 -----
@@ -253,55 +240,43 @@ To remove CUDA from your Ubuntu system, you can follow these steps:
 1.  Open a terminal on your Ubuntu system.
     
 2.  Check if the CUDA toolkit is installed by running the following command:
-    
-    `nvcc --version` 
-    
+    ```
+    nvcc: NVIDIA (R) Cuda compiler driver
+    Copyright (c) 2005-2019 NVIDIA Corporation
+    Built on Wed_Oct_23_19:24:38_PDT_2019
+    Cuda compilation tools, release 10.2, V10.2.89
+    ```
     If CUDA is installed, you will see output similar to:
-    
-    pythonCopy code
-    
-    `nvcc: NVIDIA (R) Cuda compiler driver
-    ...` 
+    ```
+    nvcc: NVIDIA (R) Cuda compiler driver
+    ```
     
 3.  If CUDA is installed, proceed with the removal process. First, uninstall the CUDA toolkit by running the following command:
-    
-    arduinoCopy code
-    
-    `sudo apt-get --purge remove cuda` 
+    ```
+    sudo apt-get --purge remove cuda
+    ```
     
 4.  Next, remove any leftover files and directories related to CUDA:
-    
-    bashCopy code
-    
-    `sudo rm -rf /usr/local/cuda*` 
+    ```
+    sudo rm -rf /usr/local/cuda*
+    ```
     
 5.  If you had added CUDA-related paths to your environment variables, you may also want to remove them. Open the `.bashrc` file in a text editor:
-    
-    bashCopy code
-    
-    `nano ~/.bashrc` 
-    
+    ```
+    nano ~/.bashrc
+    ```
 6.  Look for any lines that export CUDA-related paths, such as `export PATH=/usr/local/cuda-X.X/bin:$PATH` or `export LD_LIBRARY_PATH=/usr/local/cuda-X.X/lib64:$LD_LIBRARY_PATH`. Remove these lines or comment them out by adding a `#` at the beginning of each line.
-    
 7.  Save the `.bashrc` file and exit the text editor.
-    
 8.  Finally, reload the modified `.bashrc` file to apply the changes:
-    
-    bashCopy code
-    
-    `source ~/.bashrc` 
-    
-9.  CUDA should now be removed from your Ubuntu system. You can verify this by running the `nvcc --version` command again. If CUDA is successfully removed, the command should not be found or display an error message.
-
-
+    ```
+    source ~/.bashrc
+    ```
+9. CUDA should now be removed from your Ubuntu system. You can verify this by running the `nvcc --version` command again. If CUDA is successfully removed, the command should not be found or display an error message.
 
 
 ---
 
-
-#### Uninstall nvidia driver completely
-**For Ubuntu 12.04-22.04**
-
+#### Uninstall nvidia driver completely (For Ubuntu 12.04-22.04)
 
 - Search what packages from nvidia you have installed.
 ```
@@ -309,13 +284,11 @@ dpkg -l | grep -i nvidia
 ```
 **except**  the package  `nvidia-common`  all other packages should be purged.
 
-----------
 
 - If you want to be sure that you will purge everything related to nvidia you can give this command
 ```
 sudo apt-get remove --purge '^nvidia-.*'
 ```
-
 
 But,
 Above command will also remove the  `nvidia-common`  package and the  `nvidia-common`  package has as a dependency the  `ubuntu-desktop`  package.
