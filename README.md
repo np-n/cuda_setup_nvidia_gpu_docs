@@ -33,18 +33,19 @@ manual_install: True
 driver   : backport-iwlwifi-dkms - distro free
 ```
 
-#### 2. Check  nvidia driver and cuda compatibility, and install the driver that is compatible to `cuda` version that you have required.
+#### 2. Check  nvidia driver and `cuda` compatibility, and install the driver that is compatible to `cuda` version that you have required.
 - https://docs.nvidia.com/deploy/cuda-compatibility/index.html, https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
 - Driver installation example:
   - We want to use `cuda 10.x` and `cuda 11.x` for our GPU accelerated computing, after checking the driver-cuda compatibility, we found that driver version `>= 450.80.02*` is compatible to both `cuda 10.x` and `cuda 11.x`.
-  - Now, install nvidia-driver `nvidia-driver-470-server` 
+  - let install nvidia-driver `nvidia-driver-470-server` from available list of drivers.
     - `sudo apt-get install nvidia-driver-470-server`
-#### 3. Now, restart the system and check the installed gpu driver
+#### 3. After completion of driver installation, let's restart the system and check the installed gpu driver
 ```
 nvidia-smi
 ```
 
-- From following `nivida-smi` output, we knew that nvidia-driver `470.182.03` is installed on our system.
+- Your output will look like follows. From output, we knew that nvidia-driver `470.182.03` is installed on our system.
+- It will show the higher cuda version having compatibility and gpu memory status.
 ```commandline
 Mon May 22 23:22:30 2023       
 +-----------------------------------------------------------------------------+
@@ -69,34 +70,11 @@ Mon May 22 23:22:30 2023
 +-----------------------------------------------------------------------------+
 ```
 
-- It will show the higher cuda version having compatibility and gpu memory status.
-```
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 470.182.03   Driver Version: 470.182.03   CUDA Version: 11.4     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  NVIDIA GeForce ...  Off  | 00000000:0A:00.0 Off |                  N/A |
-|  0%   31C    P8     6W / 350W |     23MiB / 24268MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|    0   N/A  N/A      1270      G   /usr/lib/xorg/Xorg                  9MiB |
-|    0   N/A  N/A      1382      G   /usr/bin/gnome-shell               12MiB |
-+-----------------------------------------------------------------------------+
-```
 
-
-### Now start to setup CUDA 
-- Let's go for cuda 10.2
-- Visit nvidia cuda-toolkit archive https://developer.nvidia.com/cuda-toolkit-archive and download `.run` file for cuda version , here we area going to download cuda 10.2 version
+### Now, we have completed `nvidia-driver` installation, let start to setup `CUDA`
+- `cuda` is a parallel computing platform to execute parallel programs on NVIDIA GPUs.
+- Here we will go for cuda 10.2.
+- Let's visit to nvidia cuda-toolkit archive https://developer.nvidia.com/cuda-toolkit-archive and download `.run` file for cuda version , here we area going to download cuda 10.2 version
 ```
 wget https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
 ```
@@ -130,19 +108,18 @@ To install the driver using this installer, run the following command, replacing
 
 Logfile is /var/log/cuda-installer.log
 ```
-Now, cuda recommed to do following configuration.
+In above output, it is recommended to add following configuration to `.bashrc` file.
 ```
 Please make sure that
  -   PATH includes /usr/local/cuda-10.2/bin
  -   LD_LIBRARY_PATH includes /usr/local/cuda-10.2/lib64, or, add /usr/local/cuda-10.2/lib64 to /etc/ld.so.conf and run ldconfig as root
  ```
 ---
-#### After installation, Create `.bashrc` file and add following:
+#### so After installation, Create `.bashrc` file and add following:
 ```
 export PATH=“/usr/local/cuda-10.2/bin:$PATH”  
 export LD_LIBRARY_PATH=“/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH”
 ```
-
 
 
 #### Now, Download cudnn compatible to cuda version from 
@@ -234,8 +211,31 @@ Now, our CUDA setup is complete for NVIDIA GPU and you are ready for deep learni
 
 
 -----
+#### Uninstall nvidia driver completely (For Ubuntu 12.04-22.04)
 
-#### Remove cuda from system
+- Search what packages from nvidia you have installed.
+```
+dpkg -l | grep -i nvidia
+```
+**except**  the package  `nvidia-common`  all other packages should be purged.
+
+
+- If you want to be sure that you will purge everything related to nvidia you can give this command
+```
+sudo apt-get remove --purge '^nvidia-.*'
+```
+
+But,
+Above command will also remove the  `nvidia-common`  package and the  `nvidia-common`  package has as a dependency the  `ubuntu-desktop`  package.
+
+So after above command you should also give the installation command for  `ubuntu-desktop`  package
+
+```
+sudo apt-get install ubuntu-desktop
+```
+---
+
+#### Remove cuda from system (If you need to remove `nvidia-driver` and `cuda`)
 To remove CUDA from your Ubuntu system, you can follow these steps:
 
 1.  Open a terminal on your Ubuntu system.
@@ -274,28 +274,3 @@ To remove CUDA from your Ubuntu system, you can follow these steps:
     ```
 9. CUDA should now be removed from your Ubuntu system. You can verify this by running the `nvcc --version` command again. If CUDA is successfully removed, the command should not be found or display an error message.
 
-
----
-
-#### Uninstall nvidia driver completely (For Ubuntu 12.04-22.04)
-
-- Search what packages from nvidia you have installed.
-```
-dpkg -l | grep -i nvidia
-```
-**except**  the package  `nvidia-common`  all other packages should be purged.
-
-
-- If you want to be sure that you will purge everything related to nvidia you can give this command
-```
-sudo apt-get remove --purge '^nvidia-.*'
-```
-
-But,
-Above command will also remove the  `nvidia-common`  package and the  `nvidia-common`  package has as a dependency the  `ubuntu-desktop`  package.
-
-So after above command you should also give the installation command for  `ubuntu-desktop`  package
-
-```
-sudo apt-get install ubuntu-desktop
-```
