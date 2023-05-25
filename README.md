@@ -209,7 +209,7 @@ Test passed!
 
 Now, our CUDA setup is complete for NVIDIA GPU and you are ready for deep learning.
 
-
+---
 
 #### Remove cuda from system (If you need to remove `nvidia-driver` and `cuda` for fresh install)
 To remove CUDA from your Ubuntu system, you can follow these steps([see my blog on medium](https://netraneupane.medium.com/how-to-remove-cuda-completely-from-linux-72a9b0edca53)):
