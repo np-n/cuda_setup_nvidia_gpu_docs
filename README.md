@@ -210,33 +210,9 @@ Test passed!
 Now, our CUDA setup is complete for NVIDIA GPU and you are ready for deep learning.
 
 
------
-#### Uninstall nvidia driver completely (For Ubuntu 12.04-22.04)
 
-- Search what packages from nvidia you have installed.
-```
-dpkg -l | grep -i nvidia
-```
-**except**  the package  `nvidia-common`  all other packages should be purged.
-
-
-- If you want to be sure that you will purge everything related to nvidia you can give this command
-```
-sudo apt-get remove --purge '^nvidia-.*'
-```
-
-But,
-Above command will also remove the  `nvidia-common`  package and the  `nvidia-common`  package has as a dependency the  `ubuntu-desktop`  package.
-
-So after above command you should also give the installation command for  `ubuntu-desktop`  package
-
-```
-sudo apt-get install ubuntu-desktop
-```
----
-
-#### Remove cuda from system (If you need to remove `nvidia-driver` and `cuda`)
-To remove CUDA from your Ubuntu system, you can follow these steps:
+#### Remove cuda from system (If you need to remove `nvidia-driver` and `cuda` for fresh install)
+To remove CUDA from your Ubuntu system, you can follow these steps([see my blog on medium](https://netraneupane.medium.com/how-to-remove-cuda-completely-from-linux-72a9b0edca53)):
 
 1.  Open a terminal on your Ubuntu system.
     
@@ -274,3 +250,24 @@ To remove CUDA from your Ubuntu system, you can follow these steps:
     ```
 9. CUDA should now be removed from your Ubuntu system. You can verify this by running the `nvcc --version` command again. If CUDA is successfully removed, the command should not be found or display an error message.
 
+-----
+#### Uninstall nvidia driver completely (For Ubuntu 12.04-22.04)
+
+- Search what packages from nvidia you have installed.
+```
+dpkg -l | grep -i nvidia
+```
+
+- If you want to be sure that you will purge everything related to nvidia you can give this command
+```
+sudo apt-get remove --purge '^nvidia-.*'
+```
+But,
+Above command will also remove the  `nvidia-common`  package and the  `nvidia-common`  package has as a dependency the  `ubuntu-desktop`  package.
+
+So after above command you should also give the installation command for  `ubuntu-desktop`  package
+
+```
+sudo apt-get install ubuntu-desktop
+```
+---
