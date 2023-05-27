@@ -44,8 +44,7 @@ driver   : backport-iwlwifi-dkms - distro free
 nvidia-smi
 ```
 
-- Your output will look like follows. From output, we knew that nvidia-driver `470.182.03` is installed on our system.
-- It will show the higher cuda version having compatibility and gpu memory status.
+- Your output will look like follows. 
 ```commandline
 Mon May 22 23:22:30 2023       
 +-----------------------------------------------------------------------------+
@@ -69,6 +68,8 @@ Mon May 22 23:22:30 2023
 |    0   N/A  N/A      1324      G   /usr/bin/gnome-shell               12MiB |
 +-----------------------------------------------------------------------------+
 ```
+- From above output, we knew that nvidia-driver `470.182.03` is installed on our system.
+- It will show the higher cuda version having compatibility and gpu memory status.
 
 
 ### Now, we have completed `nvidia-driver` installation, let start to setup `CUDA`
